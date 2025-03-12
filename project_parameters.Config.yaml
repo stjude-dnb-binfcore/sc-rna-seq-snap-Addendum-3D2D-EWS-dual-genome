@@ -1,18 +1,18 @@
 # the following parameters are the same across the project and might be needed in more than one module #
-root_dir: "./sc-rna-seq-snap" # path to the main dir of the project where GitHub repo lives
-data_dir: "./sc-rna-seq-snap/analyses/cellranger-analysis/results/02_cellranger_count/DefaultParameters" # Options: "DefaultParameters", "ForcedCells8000Parameters", or else. Path to data dir of the project with CellRanger output results.
-metadata_dir: "./project-metadata" # path to metadata dir of the project
-genome_name: "GRCm39" # define genome reference and versioning
-PROJECT_NAME: "mouse-test-dataset"
-PI_NAME: "Stanislav Zakharenko"
-TASK_ID: "NA"
-PROJECT_LEAD_NAME: "NA"
+root_dir: "/research/dept/dnb/core_operations/Bioinformatics/dyergrp/Chroni_A/Addendum_3D2D_EWS/sc-rna-seq-snap-Addendum-3D2D-EWS-dual-genome" # path to the main dir of the project where GitHub repo lives
+data_dir: "/research/dept/dnb/core_operations/Bioinformatics/dyergrp/Chroni_A/Addendum_3D2D_EWS/sc-rna-seq-snap-Addendum-3D2D-EWS-dual-genome/analyses/cellranger-analysis/results/02_cellranger_count/DefaultParameters" # Options: "DefaultParameters", "ForcedCells8000Parameters", or else. Path to data dir of the project with CellRanger output results.
+metadata_dir: "/research/dept/dnb/core_operations/Bioinformatics/dyergrp/Chroni_A/Addendum_3D2D/project-metadata/results/Ewing_sarcoma/dual-genome/" # path to metadata dir of the project
+genome_name: "GRCh38ANDGRCm39" # define genome reference and versioning
+PROJECT_NAME: "Addendum-3D2D-EWS-dual-genome"
+PI_NAME: "Michael A. Dyer, PhD"
+TASK_ID: "QC and filtering for other samples, i.e., CCLF_cells, PDX, 3D"
+PROJECT_LEAD_NAME: "Melody Allensworth"
 DEPARTMENT: "Developmental Neurobiology"
 LEAD_ANALYSTS: "Antonia Chroni, PhD"
 GROUP_LEAD: "Cody A. Ramirez, PhD"
 CONTACT_EMAIL: "antonia.chroni@stjude.org"
 PIPELINE: "Standard sc-/sn-RNA-Seq Analysis in 10X Genomics data"
-START_DATE: "10/15/2024"
+START_DATE: "2025-03-06"
 COMPLETION_DATE: "ONGOING"
 
 
@@ -20,13 +20,19 @@ COMPLETION_DATE: "ONGOING"
 # `./analyses/fastqc-analysis`
 # path to the fastqc files for the `fastqc-analysis` module with format: `path1/*R2*.fastq.gz`
 fastqc_dir: 
-  - /path1
+  - /research/groups/dyergrp/projects/dyergrp_hartwell/common/illumina/dyergrp_841877_10XscRNAseq-1/3251770
+  - /research/groups/dyergrp/projects/dyergrp_hartwell/common/illumina/dyergrp_841877_10XscRNAseq-1/3251771
+  - /research/groups/dyergrp/projects/dyergrp_hartwell/common/illumina/dyergrp_841877_10XscRNAseq-1/3251776
+  - /research/groups/dyergrp/projects/dyergrp_hartwell/common/illumina/dyergrp_841877_10XscRNAseq-1/3251777
+  - /research/groups/dyergrp/projects/dyergrp_hartwell/common/illumina/dyergrp_841877_10XscRNAseq-1/3251780
+  - /research/groups/dyergrp/projects/dyergrp_hartwell/common/illumina/dyergrp_829202_10XscRNAseq-1/3149501
+  - /research/groups/dyergrp/projects/ALSF_Pediatric_Atlas/common/EWS_OPDX_sn/SJEWS063826_X1
   #- /path2
 
 # `./analyses/cellranger-analysis`
-genome_reference_path: "./" # path to genome reference to be used for the `cellranger-analysis` module
+genome_reference_path: "/research/dept/dnb/core_operations/Bioinformatics/common/ReferenceGenomes/homo_sapiens_mus_musculus/GRCh38_GRCm39/downloads/refdata-gex-GRCh38_and_GRCm39-2024-A/" # path to genome reference to be used for the `cellranger-analysis` module
 cellranger_parameters: "DefaultParameters" # Options: "DefaultParameters", "ForcedCells8000Parameters", or else
-genome_name_cellranger: "GRCm39" # define the genome of preference for dual genomes. In case for single genomes, please use the same as used for `genome_name`.
+genome_name_cellranger: "GRCh38ANDGRCm39" # define the genome of preference for dual genomes. In case for single genomes, please use the same as used for `genome_name`.
 
 # `./analyses/upstream-analysis`
 print_pdf_seurat_multiple_samples: "YES" # Options: "YES" (default ALWAYS), for `02B_run_seurat_qc_multiple_samples.R`
@@ -44,11 +50,13 @@ nfeatures_value: 3000 # define number of variable features
 prefix: "lognorm" # create label based on the normalization method used
 use_miQC: "NO" # Options: "YES" or "NO". Use of miQC R package or not; see `README.md` file for more information.
 use_only_step1: "NO" # Options: "YES" or "NO". Use of both or only first step for filtering low quality cells; see `README.md` file for more information.
-condition_value: "Genotype" # define main condition of the project; this can be used for visualization purposes on the UMAPs; value to be extracted from column name in `project_metadata.tsv` file
-num_dim_seurat_qc: [20, 25] # number of PCs to use in UMAP
-num_neighbors_seurat_qc: [10, 20, 30] # number of neighbors to use in UMAP
+condition_value: "tissue_type" # define main condition of the project; this can be used for visualization purposes on the UMAPs; value to be extracted from column name in `project_metadata.tsv` file
+num_dim_seurat_qc: 30 # number of PCs to use in UMAP
+num_neighbors_seurat_qc: 30 # number of neighbors to use in UMAP
 soup_fraction_value_default: 0.05 # set rho default value to use if estimated rho is > 20%
 assay_filter_object: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"
+genome_name_upstream: "DualGRCh38" # Options for the `Genome_Specific_Cell_Cycle_Scoring` function: "GRCh38", "hg19", "mm10", "Dualhg19", "DualGRCh38", "Dualmm10", "GRCm39" and DualGRCm39"
+
 num_dim_filter_object: 30 # set one value for `04_run_filter_object.Rmd`
 num_neighbors_filter_object: 30 # set one value for `04_run_filter_object.Rmd`
 use_condition_split_filter_object: "YES" # Options: "YES" (default) or "NO", for `04_run_filter_object.Rmd`
