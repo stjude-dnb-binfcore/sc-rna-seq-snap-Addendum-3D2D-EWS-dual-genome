@@ -31,6 +31,7 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 future_globals_value = 214748364800 # 200*1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_clustering_module
+integration_method = yaml$integration_method
 
 # STEP 1 - Remove contamination
 rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
@@ -45,7 +46,7 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                                 
                                 # process_seurat
                                 nfeatures_value = yaml$nfeatures_value,
-                                genome_name = yaml$genome_name,
+                                genome_name = yaml$genome_name_upstream,
                                 Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
                                 assay = yaml$assay_contamination_module,
                                 num_pcs = yaml$num_pcs,
@@ -53,7 +54,9 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                                 num_dim = yaml$num_dim_filter_object,
                                 num_neighbors = yaml$num_neighbors_filter_object,
                                 use_condition_split = yaml$use_condition_split_filter_object,
-                                condition_value = yaml$condition_value,
+                                condition_value1 = yaml$condition_value1,
+                                condition_value2 = yaml$condition_value2,
+                                condition_value3 = yaml$condition_value3,
                                 print_pdf = yaml$print_pdf_filter_object,
                                 PCA_Feature_List_value = yaml$PCA_Feature_List_value,
                                 
@@ -75,7 +78,7 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
 # STEP 2 - Integration
 rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
-                  output_file = c(paste('Report-', 'integrative-analysis-seurat', '-', Sys.Date(), sep = '')),
+                  output_file = c(paste('Report-', glue::glue('integrative-analysis-{integration_method}'), '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(
                     # the following parameters are defined in the `yaml` file
@@ -91,7 +94,7 @@ rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                     variable_value = yaml$variable_value,
                     reference_list_value = yaml$reference_list_value, 
                     PCA_Feature_List_value = yaml$PCA_Feature_List_value,       
-                    genome_name = yaml$genome_name,
+                    genome_name = yaml$genome_name_upstream,
                     nfeatures_value = yaml$nfeatures_value,
                     Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
                     assay = yaml$assay_contamination_module,

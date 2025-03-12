@@ -38,7 +38,7 @@ genome_name_cellranger: "GRCh38ANDGRCm39" # define the genome of preference for 
 print_pdf_seurat_multiple_samples: "YES" # Options: "YES" (default ALWAYS), for `02B_run_seurat_qc_multiple_samples.R`
 use_condition_split_seurat_multiple_samples: "NO" # Options: "NO" (default ALWAYS), for  `02B_run_seurat_qc_multiple_samples.R`
 grouping: "orig.ident" # define grouping to use 
-Regress_Cell_Cycle_value: "NO" # Options: "YES", "NO" or "DIFF". Indicates whether or not to regress for cell cycle and, if so, which method to use and scale data; acceptable values.
+Regress_Cell_Cycle_value: "NO" # Options: "YES", "NO", "DIFF", OR "mtDNA". Indicates whether or not to regress for cell cycle and, if so, which method to use and scale data; acceptable values.
 assay_seurat_qc: "RNA" # Options: "RNA" (default ALWAYS)
 use_SoupX_filtering_seurat_qc: "NO" # Options: "YES" or "NO" (default), for `02A_run_seurat_qc.Rmd`
 min_genes: 300 # define minimum number of genes for filtering
@@ -50,12 +50,15 @@ nfeatures_value: 3000 # define number of variable features
 prefix: "lognorm" # create label based on the normalization method used
 use_miQC: "NO" # Options: "YES" or "NO". Use of miQC R package or not; see `README.md` file for more information.
 use_only_step1: "NO" # Options: "YES" or "NO". Use of both or only first step for filtering low quality cells; see `README.md` file for more information.
-condition_value: "tissue_type" # define main condition of the project; this can be used for visualization purposes on the UMAPs; value to be extracted from column name in `project_metadata.tsv` file
-num_dim_seurat_qc: 30 # number of PCs to use in UMAP
-num_neighbors_seurat_qc: 30 # number of neighbors to use in UMAP
+condition_value1: "tissue_type" # Use discrete values. Min #conditions per project: 1 and Max #conditions per project: 3. To use for visualization purposes and split UMAPs. Value to be extracted from column name in `project_metadata.tsv` file. 
+condition_value2: NULL # Use discrete values. Min #conditions per project: 1 and Max #conditions per project: 3. To use for visualization purposes and split UMAPs. Value to be extracted from column name in `project_metadata.tsv` file. 
+condition_value3: NULL # Use discrete values. Min #conditions per project: 1 and Max #conditions per project: 3. To use for visualization purposes and split UMAPs. Value to be extracted from column name in `project_metadata.tsv` file. 
+
+num_dim_seurat_qc: 30 # number of PCs to use in UMAP. For multiple variations, use: [20, 25]
+num_neighbors_seurat_qc: 30 # number of neighbors to use in UMAP. For multiple variations, use: [10, 20, 30]
 soup_fraction_value_default: 0.05 # set rho default value to use if estimated rho is > 20%
 assay_filter_object: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"
-genome_name_upstream: "DualGRCh38" # Options for the `Genome_Specific_Cell_Cycle_Scoring` function: "GRCh38", "hg19", "mm10", "Dualhg19", "DualGRCh38", "Dualmm10", "GRCm39" and DualGRCm39"
+genome_name_upstream: "DualGRCh38" # Options for the `Genome_Specific_Cell_Cycle_Scoring` function: "GRCh38", "hg19", "mm10", "Dualhg19", "DualGRCh38", "Dualmm10", "GRCm39" and DualGRCm39".
 
 num_dim_filter_object: 30 # set one value for `04_run_filter_object.Rmd`
 num_neighbors_filter_object: 30 # set one value for `04_run_filter_object.Rmd`
@@ -118,6 +121,9 @@ gene_markers_file_name_annotation_module: "<filename>.tsv" # File name with the 
 method_annotation_module: "all" # Options: "all" (for using singler and a list of gene markers), "singler" (for using only singler method for both broad and fine annotation)
 gene_name_convention_update_annotation_module: "NO" # Options: "YES" or "NO" (default). Set to "YES" if the gene names in the gene markers file do not align with the naming convention of genes in the reference genome.
 
+ct_palette_file_broad: "cell_types_palette.tsv"  # File name with the cell types. It needs to be in `tsv` format. Please ensure cell type names exist and match the ones in the `.figures/palettes/cell_types_palette.tsv`. Alternatively, create a tsv file with your own palette and add it to the `.figures/palettes/` folder. 
+ct_palette_file_fine: "<filename>.tsv" # File name with the gene markers. It needs to be in `tsv` format. Please ensure cell type names exist and match the ones in the `.figures/palettes/cell_types_palette.tsv`. Alternatively, create a tsv file with your own palette and add it to the `.figures/palettes/` folder.
+ct_palette_file_gene_markers: "<filename>.tsv" # File name with the gene markers. It needs to be in `tsv` format. Please ensure cell type names exist and match the ones in the `.figures/palettes/cell_types_palette.tsv`. Alternatively, create a tsv file with your own palette and add it to the `.figures/palettes/` folder.
 
 # `rshiny-app`
 annotations_dir_rshiny_app: "04_cell_types_annotations_all" # Options: to update based on the folder with the desired annotations to use for the R shiny app from the `cell-types-annotation` module
