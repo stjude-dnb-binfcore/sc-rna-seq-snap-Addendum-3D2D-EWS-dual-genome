@@ -254,7 +254,7 @@ for (i in seq_along(sample_name)) {
   sc_raw <- SoupChannel(raw_matrix, filtered_matrix, mDat)
 
   # Estimate contamination fraction rho
-  sc <- autoEstCont(sc_raw, forceAccept = TRUE, tfidfMin = 0.1, soupQuantile = 0.9)
+  sc <- autoEstCont(sc_raw, forceAccept = TRUE)
   print(sc)
   soup_fraction_value <- sc$fit$rhoEst
   
