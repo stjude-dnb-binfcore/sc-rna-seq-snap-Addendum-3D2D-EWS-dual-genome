@@ -13,7 +13,7 @@ GROUP_LEAD: "Cody A. Ramirez, PhD"
 CONTACT_EMAIL: "antonia.chroni@stjude.org"
 PIPELINE: "Standard sc-/sn-RNA-Seq Analysis in 10X Genomics data"
 START_DATE: "2025-03-06"
-COMPLETION_DATE: "2025-10-23"
+COMPLETION_DATE: "ONGOING"
 
 
 # the following parameters are set up as default values and/or are specific for the following modules: 
